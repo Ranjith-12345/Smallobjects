@@ -14,7 +14,7 @@ from typing import Dict, List
 from util.misc import NestedTensor, is_main_process
 
 from .position_encoding import build_position_encoding
-from .res2net import res2net50_14w_8s
+from .dla import res2net_dla60
 
 
 class FrozenBatchNorm2d(torch.nn.Module):
@@ -86,7 +86,7 @@ class Backbone(BackboneBase):
                  train_backbone: bool,
                  return_interm_layers: bool,
                  dilation: bool):
-        backbone = res2net50_14w_8s(
+        backbone = res2net_dla60(
             pretrained=is_main_process())
         num_channels = 2048
         super().__init__(backbone, train_backbone, num_channels, return_interm_layers)
