@@ -1,4 +1,4 @@
-#Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
+# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 """
 Utilities for bounding box manipulation and GIoU.
 """
@@ -55,7 +55,8 @@ def generalized_box_iou(boxes1, boxes2):
 
     wh = (rb - lt).clamp(min=0)  # [N,M,2]
     area = wh[:, :, 0] * wh[:, :, 1]
-    return iou
+
+    return iou - (area - union) / area
 
 
 def masks_to_boxes(masks):
