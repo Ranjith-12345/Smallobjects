@@ -1,6 +1,7 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 """
 DETR Transformer class.
+
 Copy-paste from torch.nn.Transformer with modifications:
     * positional encodings are passed in MHattention
     * extra LN at the end of encoder is removed
@@ -17,7 +18,7 @@ from torch import nn, Tensor
 class Transformer(nn.Module):
 
     def __init__(self, d_model=512, nhead=8, num_encoder_layers=6,
-                 num_decoder_layers=6, dim_feedforward=512, dropout=0.1,
+                 num_decoder_layers=6, dim_feedforward=2048, dropout=0.1,
                  activation="relu", normalize_before=False,
                  return_intermediate_dec=False):
         super().__init__()
@@ -125,7 +126,7 @@ class TransformerDecoder(nn.Module):
 
 class TransformerEncoderLayer(nn.Module):
 
-    def __init__(self, d_model, nhead, dim_feedforward=512, dropout=0.1,
+    def __init__(self, d_model, nhead, dim_feedforward=2048, dropout=0.1,
                  activation="relu", normalize_before=False):
         super().__init__()
         self.self_attn = nn.MultiheadAttention(d_model, nhead, dropout=dropout)
@@ -185,7 +186,7 @@ class TransformerEncoderLayer(nn.Module):
 
 class TransformerDecoderLayer(nn.Module):
 
-    def __init__(self, d_model, nhead, dim_feedforward=512, dropout=0.1,
+    def __init__(self, d_model, nhead, dim_feedforward=2048, dropout=0.1,
                  activation="relu", normalize_before=False):
         super().__init__()
         self.self_attn = nn.MultiheadAttention(d_model, nhead, dropout=dropout)
