@@ -35,6 +35,7 @@ class DETR(nn.Module):
             print('Training with freezing detection branch of input.')
             for p in self.parameters():
                 p.requires_grad_(False)
+                print(p)
         self.num_queries = num_queries
         self.transformer = transformer
         hidden_dim = transformer.d_model
