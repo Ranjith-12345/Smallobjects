@@ -22,7 +22,7 @@ except ImportError:
 
 
 class DETRsegm(nn.Module):
-    def __init__(self, detr, freeze_detr=False):
+    def __init__(self, detr, freeze_detr=True):
         super().__init__()
         self.detr = detr
 
