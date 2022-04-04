@@ -20,7 +20,7 @@ from .transformer import build_transformer
 
 class DETR(nn.Module):
     """ This is the DETR module that performs object detection """
-    def __init__(self, backbone, transformer, num_classes, num_queries, aux_loss=False):
+    def __init__(self, backbone, transformer, num_classes, num_queries, aux_loss=False,freeze_detr= False):
         """ Initializes the model.
         Parameters:
             backbone: torch module of the backbone to be used. See backbone.py
@@ -31,6 +31,10 @@ class DETR(nn.Module):
             aux_loss: True if auxiliary decoding losses (loss at each decoder layer) are to be used.
         """
         super().__init__()
+        if freeze_detr:
+            print('Training with freezing detection branch of input.')
+            for p in self.parameters():
+                p.requires_grad_(False)
         self.num_queries = num_queries
         self.transformer = transformer
         hidden_dim = transformer.d_model
