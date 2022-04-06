@@ -53,8 +53,8 @@ class DETR(nn.Module):
             nn.Conv2d(inter_channels, channels, kernel_size=1, stride=1, padding=0),
             nn.BatchNorm2d(channels),
         )'''
-        #self.input_proj = nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1)
-        self.input_proj = nn.Sequential(
+        self.input_proj = nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1)
+        self.localatt = nn.Sequential(
           nn.Conv2d(2048,256, kernel_size=1),
           nn.BatchNorm2d(256),
           nn.ReLU(inplace=False),
@@ -85,7 +85,7 @@ class DETR(nn.Module):
         src, mask = features[-1].decompose()
         #self.input_proj = self.x(self.input_proj)
         assert mask is not None
-        hs = self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])[0]
+        hs = self.transformer(self.localatt(self.input_proj(src)), mask, self.query_embed.weight, pos[-1])[0]
         # hs = 
         outputs_class = self.class_embed(hs)
         outputs_coord = self.bbox_embed(hs).sigmoid()
