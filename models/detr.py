@@ -63,7 +63,7 @@ class DETR(nn.Module):
           nn.ReLU(inplace=False),
           nn.Conv2d(512, 2048, kernel_size=1),
         )
-        for name, parameter in localatt.named_parameters():
+        for name, parameter in self.localatt.named_parameters():
           parameter.requires_grad_(False)
         self.backbone = backbone
         self.aux_loss = aux_loss
