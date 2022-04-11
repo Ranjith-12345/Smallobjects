@@ -66,7 +66,7 @@ class DETR(nn.Module):
         for name, parameter in self.localatt.named_parameters():
           print("hi")
           print(name)
-          parameter.requires_grad_(False)
+          parameter.requires_grad = False
         self.backbone = backbone
         self.aux_loss = aux_loss
 
