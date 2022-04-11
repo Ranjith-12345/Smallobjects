@@ -44,6 +44,9 @@ class DETR(nn.Module):
             nn.Conv2d(backbone.num_channels, backbone.num_channels, kernel_size=1),
             nn.BatchNorm2d(backbone.num_channels),
         )
+        for name, parameter in backbone.named_parameters():
+            if not train_backbone or 'layer2' not in name and 'layer3' not in name and 'layer4' not in name:
+                parameter.requires_grad_(False)
 
         self.global_att = nn.Sequential(
             nn.AdaptiveAvgPool2d(1),
@@ -60,6 +63,8 @@ class DETR(nn.Module):
           nn.ReLU(inplace=False),
           nn.Conv2d(512, 2048, kernel_size=1),
         )
+        for name, parameter in localatt.named_parameters():
+          parameter.requires_grad_(False)
         self.backbone = backbone
         self.aux_loss = aux_loss
 
