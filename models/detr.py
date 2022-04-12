@@ -63,10 +63,19 @@ class DETR(nn.Module):
           nn.ReLU(inplace=False),
           nn.Conv2d(512, 2048, kernel_size=1),
         )
-        for name, parameter in self.localatt.named_parameters():
-          print("hi")
-          print(name)
-          parameter.requires_grad = False
+        self.localatt.0.weight = 0
+        self.localatt.1.weight = 0
+        self.localatt.0.bias = 0
+        self.localatt.1.bias = 0
+        self.localatt.1.running_mean = 0
+        self.localatt.1.running_var =0
+        self.localatt.3.weight = 0
+        self.localatt.3.bias =0 
+        
+#         for name, parameter in self.localatt.named_parameters():
+#           print("hi")
+#           print(name)
+#           parameter.requires_grad = False
         self.backbone = backbone
         self.aux_loss = aux_loss
 
